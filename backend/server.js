@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'https://daily-food-menu-eta.vercel.app', 
+    origin: 'https://daily-food-menu-eta.vercel.app/', 
     credentials: true 
 }));
 
@@ -26,8 +26,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('Error connecting to MongoDB:', err));
 
-// Handle preflight requests for all routes
-app.options('*', cors());
+
 
 // Routes
 app.use('/api', foodSelectionRoutes); 
