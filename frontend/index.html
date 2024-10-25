@@ -54,37 +54,40 @@
         }
     </style>
     <script>
-        // Function to handle form submission
         async function submitForm(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
 
             const name = document.getElementById('name').value;
             const food = document.getElementById('food').value;
 
+            if (!food) {
+                alert('Please select a food option.');
+                return;
+            }
+
             // Send POST request to the backend
-            const response = await fetch('https://daily-food-menu-production.up.railway.app/submit', {
+            const response = await fetch('https://daily-food-menu-production.up.railway.app/api/submit', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
-                body: new URLSearchParams({ name, food }),
+                body: JSON.stringify({ name, food }),
             });
 
             if (response.ok) {
                 alert('Selection submitted successfully!');
-                fetchSelections(); // Refresh the selections
+                fetchSelections();
             } else {
                 alert('Error submitting selection');
             }
         }
 
-        // Function to fetch and display food selections
         async function fetchSelections() {
-            const response = await fetch('https://daily-food-menu-production.up.railway.app/results'); // Fetch from backend
+            const response = await fetch('https://daily-food-menu-production.up.railway.app/api/results');
             const selections = await response.json();
 
             const resultDiv = document.getElementById('results');
-            resultDiv.innerHTML = ''; // Clear previous results
+            resultDiv.innerHTML = '';
 
             selections.forEach(selection => {
                 const listItem = document.createElement('li');
@@ -93,7 +96,6 @@
             });
         }
 
-        // Fetch selections on page load
         window.onload = fetchSelections;
     </script>
 </head>
@@ -108,12 +110,12 @@
             <option value="">Select...</option>
             <option value="Fries">Fries</option>
             <option value="Pakorai">Pakorai</option>
-            <option value="burger">Burger</option>
+            <option value="Burger">Burger</option>
             <option value="Wings">Wings</option>
             <option value="Salan roti">Salan roti</option>
             <option value="Samosai">Samosai</option>
             <option value="Rolls">Rolls</option>
-            <option value="biscuits">biscuits</option>
+            <option value="Biscuits">Biscuits</option>
             <option value="Milkshake">Milkshake</option>
         </select>
 
