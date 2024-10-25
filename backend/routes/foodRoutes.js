@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const FoodSelection = require('../models/FoodSelection'); // Ensure this points to your correct model
+const FoodSelection = require('../models/FoodSelection'); 
 
 // Endpoint to submit food selections
 router.post('/submit', async (req, res) => {

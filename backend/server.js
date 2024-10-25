@@ -1,19 +1,20 @@
-/// server.js
+// server.js
 
-const express = require('express'); // Ensure this is only declared once
+const express = require('express'); 
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const foodSelectionRoutes = require('./routes/foodRoutes'); // Adjust the path as necessary
+const foodSelectionRoutes = require('./routes/foodRoutes'); 
 const dotenv = require('dotenv').config();
 
-const app = express(); // Initialize express app
+const app = express(); 
 
 // Middleware
 app.use(cors({
-    origin: 'https://daily-food-menu-eta.vercel.app', // Your frontend URL
-    methods: ['GET', 'POST'],
-    credentials: true
+    // origin: 'https://daily-food-menu-eta.vercel.app', // Allow requests from your frontend
+    origin: '*', // For testing only
+    methods: ['GET', 'POST', 'OPTIONS'], // Allow methods
+    credentials: true // Enable set cookie
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,8 +28,11 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('Error connecting to MongoDB:', err));
 
+// Handle preflight requests for all routes
+app.options('*', cors());
+
 // Routes
-app.use('/api', foodSelectionRoutes); // Add a prefix to your routes
+app.use('/api', foodSelectionRoutes); 
 
 const PORT = process.env.PORT || 3000;
 
