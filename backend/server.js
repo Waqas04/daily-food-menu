@@ -5,9 +5,13 @@
 const express = require('express'); // Ensure this is only declared once
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 const foodSelectionRoutes = require('./routes/foodRoutes.js'); // Adjust the path as necessary
 const dotenv = require('dotenv').config();
 
+app.use(cors({
+    origin: 'https://daily-food-menu-eta.vercel.app', // Your frontend URL
+}));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
