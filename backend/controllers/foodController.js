@@ -1,30 +1,31 @@
+const express = require('express');
+const router = express.Router();
 const FoodSelection = require('../models/FoodSelection');
 
-// Create a new food selection
-exports.createSelection = (req, res) => {
-    const { name, food } = req.body;
+// POST route to save food selection
+router.post('/submit', async (req, res) => {
+    try {
+        const { name, food, extraFood } = req.body;
 
-    const newSelection = new FoodSelection({ name, food });
+        const selection = new FoodSelection({ name, food, extraFood });
+        await selection.save();
 
-    newSelection.save()
-        .then(() => {
-            console.log('Data saved to MongoDB');
-            res.redirect('/results'); // Redirect to results after submission
-        })
-        .catch(err => {
-            console.error('Error saving data:', err);
-            res.status(500).send('Error saving data');
-        });
-};
+        res.status(201).json({ message: 'Selection saved' });
+    } catch (error) {
+        console.error('Error saving data:', error);
+        res.status(500).json({ error: 'Error saving data' });
+    }
+});
 
-// Fetch all food selections
-exports.getSelections = (req, res) => {
-    FoodSelection.find()
-        .then(selections => {
-            res.json(selections); // Send the selections as a JSON response
-        })
-        .catch(err => {
-            console.error('Error fetching data:', err);
-            res.status(500).send('Error fetching data');
-        });
-};
+// GET route to fetch all selections
+router.get('/results', async (req, res) => {
+    try {
+        const selections = await FoodSelection.find();
+        res.status(200).json(selections);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'Error fetching data' });
+    }
+});
+
+module.exports = router;
