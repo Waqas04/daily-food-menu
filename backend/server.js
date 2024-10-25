@@ -1,22 +1,21 @@
 // server.js
 
-// server.js
-
 const express = require('express'); // Ensure this is only declared once
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cors = require('cors')
-const foodSelectionRoutes = require('./routes/foodRoutes.js'); // Adjust the path as necessary
+const cors = require('cors');
+const foodSelectionRoutes = require('./routes/foodRoutes'); // Adjust the path as necessary
 const dotenv = require('dotenv').config();
 
-app.use(cors({
-    origin: 'https://daily-food-menu-eta.vercel.app', // Your frontend URL
-}));
-
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app = express(); // Initialize express app
 
 // Middleware
+app.use(cors({
+    origin: 'https://daily-food-menu-eta.vercel.app', // Your frontend URL
+    methods: ['GET', 'POST'], // Specify allowed methods
+    credentials: true // Allow credentials (cookies, authorization headers, etc.)
+}));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -29,7 +28,9 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error('Error connecting to MongoDB:', err));
 
 // Routes
-app.use('/', foodSelectionRoutes);
+app.use('/api', foodSelectionRoutes); // Add a prefix to your routes
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
