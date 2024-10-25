@@ -1,6 +1,6 @@
-// server.js
+/// server.js
 
-const express = require('express');
+const express = require('express'); // Ensure this is only declared once
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,17 +11,13 @@ const app = express(); // Initialize express app
 
 // Middleware
 app.use(cors({
-    origin: '*', // Allow all origins temporarily for testing
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow specific methods
-    allowedHeaders: ['Content-Type'], // Allow necessary headers
+    origin: 'https://daily-food-menu-eta.vercel.app', // Your frontend URL
+    methods: ['GET', 'POST'],
     credentials: true
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// Enable pre-flight for all routes
-app.options('*', cors());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {

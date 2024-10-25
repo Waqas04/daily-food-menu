@@ -1,11 +1,22 @@
-// backend/models/FoodSelection.js
+// models/FoodSelection.js
 
 const mongoose = require('mongoose');
 
 const foodSelectionSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    food: { type: String, required: true },
-    extraFood: { type: String } // Field for extra food options
-});
+    name: {
+        type: String,
+        required: true
+    },
+    food: {
+        type: String,
+        default: ''
+    },
+    extraFood: {
+        type: String,
+        default: ''
+    }
+}, { timestamps: true }); // Optional: Adds createdAt and updatedAt timestamps
 
-module.exports = mongoose.model('FoodSelection', foodSelectionSchema);
+const FoodSelection = mongoose.model('FoodSelection', foodSelectionSchema);
+module.exports = FoodSelection;
+
