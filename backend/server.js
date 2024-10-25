@@ -10,12 +10,12 @@ const dotenv = require('dotenv').config();
 const app = express(); 
 
 // Middleware
-app.use(cors({
-    // origin: 'https://daily-food-menu-eta.vercel.app', // Allow requests from your frontend
-    origin: 'https://daily-food-menu-production.up.railway.app', // For testing only
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow methods
-    credentials: true // Enable set cookie
-}));
+// app.use(cors({
+//     // origin: 'https://daily-food-menu-eta.vercel.app', // Allow requests from your frontend
+//     origin: 'https://daily-food-menu-production.up.railway.app', // For testing only
+//     methods: ['GET', 'POST', 'OPTIONS'], // Allow methods
+//     credentials: true // Enable set cookie
+// }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
