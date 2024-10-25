@@ -11,9 +11,9 @@ const app = express(); // Initialize express app
 
 // Middleware
 app.use(cors({
-    origin: 'https://daily-food-menu-eta.vercel.app', // Your frontend URL
-    methods: ['GET', 'POST', 'OPTIONS'], // Include OPTIONS for preflight
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+    origin: '*', // Allow all origins temporarily for testing
+    methods: ['GET', 'POST', 'OPTIONS'], // Allow specific methods
+    allowedHeaders: ['Content-Type'], // Allow necessary headers
     credentials: true
 }));
 
